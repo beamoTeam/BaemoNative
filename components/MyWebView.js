@@ -1,31 +1,23 @@
-import React, {Component} from 'react';
-// import {StyleSheet} from 'react-native';
+import React from 'react';
 import {WebView} from 'react-native-webview';
 
-class MyWeb extends Component {
-  render() {
-    return (
-      <WebView
-        originWhitelist={['*']}
-        source={{uri: 'http://localhost:3000/'}}
-        style={{
-          marginTop: '12%',
-          marginBottom: '6%',
-        }}
-      />
-    );
-  }
-}
+const WebviewContainer = ({handleSetRef, handleEndLoading}) => {
+  const url = 'http://localhost:3000/booking/1';
 
-// const styles = StyleSheet.create({
-//   margin: {
-//     marginTop: 400,
-//     marginLeft: 200,
-//   },
-//   border: {
-//     borderWidth: 1,
-//     borderColor: 'black',
-//   },
-// });
+  /** 웹뷰에서 rn으로 값을 보낼때 거치는 함수 */
+  const handleOnMessage = ({nativeEvent: {data}}) => {
+    // data에 웹뷰에서 보낸 값이 들어옵니다.
+    console.log(data);
+  };
 
-export default MyWeb;
+  return (
+    <WebView
+      onLoadEnd={handleEndLoading}
+      onMessage={handleOnMessage}
+      ref={handleSetRef}
+      source={{uri: url}}
+    />
+  );
+};
+
+export default WebviewContainer;
