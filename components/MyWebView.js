@@ -1,21 +1,23 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
 
-const WebviewContainer = ({handleSetRef, handleEndLoading}) => {
-  const url = 'http://localhost:3000/booking/1';
+const url = 'http://127.0.0.1:5500/html/index.html';
 
-  /** 웹뷰에서 rn으로 값을 보낼때 거치는 함수 */
-  const handleOnMessage = ({nativeEvent: {data}}) => {
-    // data에 웹뷰에서 보낸 값이 들어옵니다.
-    console.log(data);
-  };
-
+const WebviewContainer = ({handleSetRef}) => {
+  const run = `
+    document.body.style.backgroundColor = 'blue';
+    true;
+  `;
   return (
     <WebView
-      onLoadEnd={handleEndLoading}
-      onMessage={handleOnMessage}
       ref={handleSetRef}
+      onMessage={event => {}}
+      injectedJavaScript={run}
       source={{uri: url}}
+      style={{
+        marginTop: '12%',
+        marginBottom: '6%',
+      }}
     />
   );
 };
